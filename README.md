@@ -1,6 +1,9 @@
-# 2048
-Trying to make 2048 with SDL2
+# vscode-cpp
+vscode settings for my c++ projects
 
 ## make
-build ```make binary```
+build binary ```make binary```
 build and run ```make run```
+
+## find include paths
+```gcc -v -E -x c++ -```
