@@ -1,9 +1,6 @@
-# vscode-cpp
-vscode settings for my c++ projects
+# 2048
+2048 for SDL2
 
 ## make
 build binary ```make binary```
 build and run ```make run```
-
-## find include paths
-```gcc -v -E -x c++ -```
