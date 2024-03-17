@@ -1,5 +1,6 @@
-# vscode-cpp
-my vscode settings for c++ since it's annoying to setup
+# 2048
+Trying to make 2048 with SDL2
 
-to find your include folders:
-```gcc -v -E -x c++ -```
+## make
+build ```make binary```
+build and run ```make run```
