@@ -1,14 +1,23 @@
 #include "Game.hpp"
+#include <SDL2/SDL_ttf.h>
 
-Game::Game() {}
+Game::Game() : board(nullptr) { 
+}
 Game::~Game() {}
 
 void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen){
-  // init SDL
   if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
     printf("SDL initialized\n");
   } else {
-    printf("SDL not initialized\n");
+    printf("SDL initialization failed: %s", SDL_GetError());
+    running = false;
+    return;
+  }
+  
+  if (TTF_Init() == 0) {
+    printf("TTF initialized\n");
+  } else {
+    printf("TTF initialization failed: %s\n", TTF_GetError());
     running = false;
     return;
   }
@@ -18,21 +27,25 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
   if (window) {
     printf("Window created\n");
   } else {
-    printf("Window not created\n");
+    printf("Window not created: %s", SDL_GetError());
     running = false;
     return;
   } 
 
   // init renderer
-  renderer = SDL_CreateRenderer(window, -1, 0);
+  Game::renderer = SDL_CreateRenderer(window, -1, 0);
   if (renderer) {
     printf("Renderer created\n");
-    running = true;
   } else {
-    printf("Renderer not created\n");
+    printf("Renderer not created: %s", SDL_GetError());
     running = false;
     return;
   }
+
+  // init board
+  board = new Board();
+
+  running = true;
 }
 
 void Game::handleEvents(){
@@ -50,16 +63,8 @@ void Game::render(){
   SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
   SDL_RenderClear(renderer);
 
-  // test rectangles
-  SDL_Rect rect = { 10, 10, 100, 100 };
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-  SDL_RenderFillRect(renderer, &rect);
-  SDL_Rect rect2 = { 40, 40, 100, 100 };
-  SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
-  SDL_RenderFillRect(renderer, &rect2);
-  SDL_Rect rect3 = { 70, 70, 100, 100 };
-  SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255);
-  SDL_RenderFillRect(renderer, &rect3);
+  // render board
+  board->render(renderer);
   
   // draw to screen
   SDL_RenderPresent(renderer);
@@ -70,5 +75,6 @@ void Game::destroy(){
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   SDL_Quit();
+  TTF_Quit();
   printf("SDL closed\n");
 }

@@ -2,6 +2,7 @@
 #define GAME_HPP
 
 #include <SDL2/SDL.h>
+#include "Board.hpp"
 
 class Game {
   public:
@@ -21,6 +22,9 @@ class Game {
     SDL_Event event;
     
     bool running = false;
+
+    Board *board;
+    int score = 0;
 };
 
 #endif
