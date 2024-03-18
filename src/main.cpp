@@ -3,7 +3,7 @@
 int main() {
   Game *game = new Game();
   
-  game->init("2048", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 480, 480, false);
+  game->init("2048", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 480, 560, false);
   while (game->isRunning()) {
     game->handleEvents();
     game->update();

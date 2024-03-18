@@ -1,10 +1,9 @@
 #include "Board.hpp"
 
 bool Board::generateTile() {
-  // generate tile of either 2 or 4 at random available position, printf error if no position available
   int availablePositions = 0;
-  for (int i = 0; i < 4; ++i) {
-    for (int j = 0; j < 4; ++j) {
+  for (int i : {0, 1, 2, 3}) {
+    for (int j : {0, 1, 2, 3}) {
       if (values[i][j] == 0) {
         ++availablePositions;
       }
@@ -14,6 +13,7 @@ bool Board::generateTile() {
     return false;
   }
 
+  // place random tile
   int x = rand() % 4;
   int y = rand() % 4;
   while (values[x][y] != 0) {
@@ -21,5 +21,12 @@ bool Board::generateTile() {
     y = rand() % 4;
   }
   values[x][y] = (rand() % 2 + 1) * 2;
+  score += values[x][y];
   return true;
 }
+
+
+void Board::leftSwipe(){ printf("left swipe\n"); }
+void Board::rightSwipe(){ printf("right swipe\n"); }
+void Board::upSwipe(){ printf("up swipe\n"); }
+void Board::downSwipe(){ printf("down swipe\n"); }

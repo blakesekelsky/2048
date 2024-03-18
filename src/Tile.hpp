@@ -15,10 +15,6 @@ class Tile {
     SDL_Texture *msgTexture = nullptr;
     TTF_Font *font = nullptr;
     int value = 0;
-    
-  public:
-    Tile() {}
-    Tile(int x, int y, int size, int val) : tileRect({ x,y,size,size }), textRect({ x,y,size,size }), value(val) {}
 
     void initFont() {
       font = TTF_OpenFont("assets/FantasqueSansMonoBold.ttf", 24);
@@ -26,6 +22,17 @@ class Tile {
         std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
       }
     }
+
+    void destroy() {
+      SDL_FreeSurface(msgSurface);
+      SDL_DestroyTexture(msgTexture);
+      TTF_CloseFont(font);
+    }
+
+  public:
+    Tile() {}
+    Tile(int x, int y, int size, int val) : tileRect({ x,y,size,size }), textRect({ x,y,size,size }), value(val) {}
+    Tile(int x, int y, int w, int h, int val) : tileRect({ x,y,w,h }), textRect({ x,y,w,h }), value(val) {}
 
     void render(SDL_Renderer *renderer) {
       // verify font
@@ -45,12 +52,6 @@ class Tile {
 
       // destroy text
       destroy();
-    }
-
-    void destroy() {
-      SDL_FreeSurface(msgSurface);
-      SDL_DestroyTexture(msgTexture);
-      TTF_CloseFont(font);
     }
 };
 
