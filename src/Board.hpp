@@ -4,29 +4,33 @@
 #include <SDL2/SDL.h>
 #include "Tile.hpp"
 
-struct Board {
-  int values[4][4] = {0};
-  Tile tiles[4][4] = {Tile()};
+class Board {
+  private:
+    int values[4][4] = {0};
+    Tile tiles[4][4] = {Tile()};
 
-  Board() {}
+  public:
+    Board() {}
 
-  void update() {
-    // update tiles
-    for ( int i : {0, 1, 2, 3} ) {
-      for ( int j : {0, 1, 2, 3} ) {
-        tiles[i][j] = Tile(2 + (112 * i), 2 + (112 * j), 110, values[i][j]);
+    bool generateTile();
+
+    void update() {
+      // update tiles
+      for ( int i : {0, 1, 2, 3} ) {
+        for ( int j : {0, 1, 2, 3} ) {
+          tiles[i][j] = Tile(2 + (112 * i), 2 + (112 * j), 110, values[i][j]);
+        }
       }
     }
-  }
 
-  void render(SDL_Renderer *renderer) {
-    // render board
-    for ( int i : {0, 1, 2, 3} ) {
-      for ( int j : {0, 1, 2, 3} ) {
-        tiles[i][j].render(renderer);
+    void render(SDL_Renderer *renderer) {
+      // render board
+      for ( int i : {0, 1, 2, 3} ) {
+        for ( int j : {0, 1, 2, 3} ) {
+          tiles[i][j].render(renderer);
+        }
       }
     }
-  }
 };
 
 #endif

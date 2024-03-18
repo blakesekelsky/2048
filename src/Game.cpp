@@ -53,6 +53,18 @@ void Game::handleEvents(){
     if (event.type == SDL_QUIT) {
       running = false;
     }
+
+    if (event.type == SDL_KEYDOWN) {
+      switch (event.key.keysym.sym) {
+        case SDLK_SPACE:
+          if (board->generateTile()) {
+            printf("Tile generated\n");
+          } else {
+            running = false;
+          }
+          break;
+      }
+    }
   }
 }
 
