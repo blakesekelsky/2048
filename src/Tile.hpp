@@ -10,6 +10,8 @@ struct Tile {
   SDL_Rect tileRect = {0,0,0,0};
   SDL_Rect textRect = {0,0,0,0};
   SDL_Color textColor = {255,255,255};
+  SDL_Surface *msgSurface = nullptr;
+  SDL_Texture *msgTexture = nullptr;
   TTF_Font *font = nullptr;
   int value = 0;
 
@@ -35,14 +37,15 @@ struct Tile {
     SDL_RenderFillRect(renderer, &tileRect);
 
     // draw text
-    SDL_Surface *msgSurface = TTF_RenderText_Solid(font, std::to_string(value).c_str(), textColor);
-    SDL_Texture *msgTexture = SDL_CreateTextureFromSurface(renderer, msgSurface);
+    msgSurface = TTF_RenderText_Solid(font, std::to_string(value).c_str(), textColor);
+    msgTexture = SDL_CreateTextureFromSurface(renderer, msgSurface);
     SDL_RenderCopy(renderer, msgTexture, NULL, &textRect);
 
-    destroy(msgSurface, msgTexture);
+    // destroy text
+    destroy();
   }
 
-  void destroy(SDL_Surface *msgSurface, SDL_Texture *msgTexture) {
+  void destroy() {
     SDL_FreeSurface(msgSurface);
     SDL_DestroyTexture(msgTexture);
     TTF_CloseFont(font);

@@ -8,9 +8,7 @@ struct Board {
   int values[4][4] = {0};
   Tile tiles[4][4] = {Tile()};
 
-  Board() {
-    
-  }
+  Board() {}
 
   void update() {
     // update tiles
