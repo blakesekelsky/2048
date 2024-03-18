@@ -12,15 +12,23 @@ struct Board {
     
   }
 
-  void render(SDL_Renderer *renderer) {
-    // create tiles
+  void update() {
+    // update tiles
     for ( int i : {0, 1, 2, 3} ) {
       for ( int j : {0, 1, 2, 3} ) {
-        tiles[i][j] = Tile(2 + (112 * i), 2 + (112 * j), 110, values[i][j]);
-        printf("Tile created at %d, %d with value %d \n", tiles[i][j].textRect.x, tiles[i][j].textRect.y, tiles[i][j].value);
+        tiles[i][j].value = values[i][j];
       }
     }
 
+    // update board
+    for ( int i : {0, 1, 2, 3} ) {
+      for ( int j : {0, 1, 2, 3} ) {
+        tiles[i][j] = Tile(2 + (112 * i), 2 + (112 * j), 110, values[i][j]);
+      }
+    }
+  }
+
+  void render(SDL_Renderer *renderer) {
     // render board
     for ( int i : {0, 1, 2, 3} ) {
       for ( int j : {0, 1, 2, 3} ) {

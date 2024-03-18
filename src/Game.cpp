@@ -56,7 +56,10 @@ void Game::handleEvents(){
   }
 }
 
-void Game::update(){}
+void Game::update(){
+  // update tile values
+  board->update();
+}
 
 void Game::render(){
   // clear renderer
