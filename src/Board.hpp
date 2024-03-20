@@ -11,7 +11,13 @@ class Board {
     Tile tiles[4][4] = {Tile()};
 
   public:
-    Board() {}
+    Board() {
+      // generate starting tiles
+      if (score == 0) {
+        generateTile();
+        generateTile();
+      }
+    }
 
     bool generateTile();
     void printScore() { printf("Score: %d\n", score); }
@@ -22,12 +28,6 @@ class Board {
     void downSwipe();
 
     void update() {
-      // if score is 0, generate two tiles
-      if (score == 0) {
-        generateTile();
-        generateTile();
-      }
-
       // update tiles
       for ( int i : {0, 1, 2, 3} ) {
         for ( int j : {0, 1, 2, 3} ) {
