@@ -31,7 +31,8 @@ class Board {
       // update tiles
       for ( int i : {0, 1, 2, 3} ) {
         for ( int j : {0, 1, 2, 3} ) {
-          tiles[i][j] = Tile(4 + (119 * i), 4 + (119 * j), 115, values[i][j]);
+          // i = x, j = y
+          tiles[i][j] = Tile(4 + (119 * j), 4 + (119 * i), 115, values[i][j]);
         }
       }
     }
