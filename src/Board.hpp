@@ -22,10 +22,13 @@ class Board {
     bool generateTile();
     void printScore() { printf("Score: %d\n", score); }
 
-    void leftSwipe();
-    void rightSwipe();
-    void upSwipe();
-    void downSwipe();
+    void makeCopy(int oldValues[4][4]);
+    bool compareCopy(int oldValues[4][4]);
+
+    bool leftSwipe();
+    bool rightSwipe();
+    bool upSwipe();
+    bool downSwipe();
 
     void update() {
       // update tiles

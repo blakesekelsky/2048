@@ -57,28 +57,32 @@ void Game::handleEvents(){
     if (event.type == SDL_KEYDOWN) {
       switch (event.key.keysym.sym) {
         case SDLK_LEFT:
-          board->leftSwipe();
-          if (!board->generateTile())
-            running = false;
-          board->printScore();
+          if (board->leftSwipe()) {
+            if (!board->generateTile())
+              running = false;
+            board->printScore();
+          }
           break;
         case SDLK_RIGHT:
-          board->rightSwipe();
-          if (!board->generateTile())
-            running = false;
-          board->printScore();
+          if (board->rightSwipe()) {
+            if (!board->generateTile())
+              running = false;
+            board->printScore();
+          }
           break;
         case SDLK_UP:
-          board->upSwipe();
-          if (!board->generateTile())
-            running = false;
-          board->printScore();
+          if (board->upSwipe()) {
+            if (!board->generateTile())
+              running = false;
+            board->printScore();
+          }
           break;
         case SDLK_DOWN:
-          board->downSwipe();
-          if (!board->generateTile())
-            running = false;
-          board->printScore();
+          if (board->downSwipe()) {
+            if (!board->generateTile())
+              running = false;
+            board->printScore();
+          }
           break;
       }
     }
