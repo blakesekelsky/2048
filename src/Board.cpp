@@ -65,17 +65,13 @@ bool Board::leftSwipe(){
   }
 
   // combine like values
-  for (int i : {0, 1, 2, 3}) {
-    for (int j : {0, 1, 2, 3}) {
-      if (values[i][j] != 0) {
-        for (int k = j + 1; k < 4; ++k) {
-          if (values[i][j] == values[i][k]) {
-            values[i][j] *= 2;
-            values[i][k] = 0;
-            score += values[i][j];
-            break;
-          }
-        }
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 3; j++) {
+      if (values[i][j] != 0 && values[i][j] == values[i][j + 1]) {
+        values[i][j] *= 2;
+        values[i][j + 1] = 0;
+        score += values[i][j];
+        j++;
       }
     }
   }
@@ -96,11 +92,9 @@ bool Board::leftSwipe(){
   }
 
   // if array has changed, move is valid
-  if (!compareCopy(oldValues)) {
-    return true;
-  }
-  return false;
- }
+  return !compareCopy(oldValues);
+}
+
 bool Board::rightSwipe(){ 
   int oldValues[4][4];
   makeCopy(oldValues);
@@ -121,17 +115,13 @@ bool Board::rightSwipe(){
   }
 
   // combine like values
-  for (int i : {0, 1, 2, 3}) {
-    for (int j : {3, 2, 1, 0}) {
-      if (values[i][j] != 0) {
-        for (int k = j - 1; k >= 0; --k) {
-          if (values[i][j] == values[i][k]) {
-            values[i][j] *= 2;
-            values[i][k] = 0;
-            score += values[i][j];
-            break;
-          }
-        }
+  for (int i = 0; i < 4; i++) {
+    for (int j = 3; j > 0; j--) {
+      if (values[i][j] != 0 && values[i][j] == values[i][j - 1]) {
+        values[i][j] *= 2;
+        values[i][j - 1] = 0;
+        score += values[i][j];
+        j--;
       }
     }
   }
@@ -152,11 +142,9 @@ bool Board::rightSwipe(){
   }
 
   // if array has changed, move is valid
-  if (!compareCopy(oldValues)) {
-    return true;
-  }
-  return false;
- }
+  return !compareCopy(oldValues);
+}
+
 bool Board::upSwipe(){ 
   // make a copy of the array to compare later
   int oldValues[4][4];
@@ -178,17 +166,13 @@ bool Board::upSwipe(){
   }
 
   // combine like values
-  for (int i : {0, 1, 2, 3}) {
-    for (int j : {0, 1, 2, 3}) {
-      if (values[j][i] != 0) {
-        for (int k = j + 1; k < 4; ++k) {
-          if (values[j][i] == values[k][i]) {
-            values[j][i] *= 2;
-            values[k][i] = 0;
-            score += values[j][i];
-            break;
-          }
-        }
+  for (int i = 0; i < 4; i++) { 
+    for (int j = 0; j < 3; j++) {
+      if (values[j][i] != 0 && values[j][i] == values[j + 1][i]) {
+        values[j][i] *= 2;
+        values[j + 1][i] = 0;
+        score += values[j][i];
+        j++;
       }
     }
   }
@@ -209,11 +193,9 @@ bool Board::upSwipe(){
   }
 
   // if array has changed, move is valid
-  if (!compareCopy(oldValues)) {
-    return true;
-  }
-  return false;
+  return !compareCopy(oldValues);
 }
+
 bool Board::downSwipe(){ 
   // make a copy of the array to compare later
   int oldValues[4][4];
@@ -235,17 +217,13 @@ bool Board::downSwipe(){
   }
 
   // combine like values
-  for (int i : {0, 1, 2, 3}) {
-    for (int j : {3, 2, 1, 0}) {
-      if (values[j][i] != 0) {
-        for (int k = j - 1; k >= 0; --k) {
-          if (values[j][i] == values[k][i]) {
-            values[j][i] *= 2;
-            values[k][i] = 0;
-            score += values[j][i];
-            break;
-          }
-        }
+  for (int i = 0; i < 4; i++) {
+    for (int j = 3; j > 0; j--) {
+      if (values[j][i] != 0 && values[j][i] == values[j - 1][i]) {
+        values[j][i] *= 2;
+        values[j - 1][i] = 0;
+        score += values[j][i];
+        j--;
       }
     }
   }
@@ -266,8 +244,5 @@ bool Board::downSwipe(){
   }
 
   // if array has changed, move is valid
-  if (!compareCopy(oldValues)) {
-    return true;
-  }
-  return false;
+  return !compareCopy(oldValues);
 }
