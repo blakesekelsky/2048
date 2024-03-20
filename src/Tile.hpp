@@ -10,14 +10,14 @@ class Tile {
   private:
     SDL_Rect tileRect = {0,0,0,0};
     SDL_Rect textRect = {0,0,0,0};
-    SDL_Color textColor = {255,255,255};
     SDL_Surface *msgSurface = nullptr;
     SDL_Texture *msgTexture = nullptr;
     TTF_Font *font = nullptr;
     int value = 0;
+    SDL_Color textColor = {255,255,255};
 
     void initFont() {
-      font = TTF_OpenFont("assets/FantasqueSansMonoBold.ttf", 24);
+      font = TTF_OpenFont("assets/MouldyCheeseRegular.ttf", 100);
       if (!font) {
         std::cerr << "Failed to load font: " << TTF_GetError() << std::endl;
       }
@@ -31,8 +31,8 @@ class Tile {
 
   public:
     Tile() {}
-    Tile(int x, int y, int size, int val) : tileRect({ x,y,size,size }), textRect({ x,y,size,size }), value(val) {}
-    Tile(int x, int y, int w, int h, int val) : tileRect({ x,y,w,h }), textRect({ x,y,w,h }), value(val) {}
+    Tile(int x, int y, int size, int val) : tileRect({ x,y,size,size }), textRect({ x+5,y+20,size-10,size-10 }), value(val) {}
+    Tile(int x, int y, int w, int h, int val) : tileRect({ x,y,w,h }), textRect({ x+5,y+20,w-10,h-10 }), value(val) {}
 
     void render(SDL_Renderer *renderer) {
       // verify font
