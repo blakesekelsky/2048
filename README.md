@@ -1,5 +1,5 @@
 # 2048
-2048 for SDL2
+2048 built with SDL2
 
 ## make
 build binary ```make binary```
