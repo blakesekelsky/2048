@@ -1,15 +1,14 @@
 #include "Game.hpp"
 
 int main() {
-  Game *game = new Game();
-  
-  game->init("2048", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 480, 560, false);
+  Game *game = new Game("2048", 480, 480, false);  
+
   while (game->isRunning()) {
     game->handleEvents();
     game->update();
     game->render(); 
   }
-
-  game->destroy();
+  delete game;
+  
   return 0;
 }

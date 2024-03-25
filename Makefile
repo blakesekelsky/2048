@@ -7,7 +7,7 @@ run_dev: dev_binary
 
 cmake:
 	mkdir -p build/assets
-	cd build && cp ../assets/MouldyCheeseRegular.ttf assets/ && cmake .. && make
+	cd build && cp ../assets/SunnySpellsBasic.ttf assets/ && cmake .. && make
 
 run: cmake
 	./build/2048

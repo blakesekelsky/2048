@@ -6,14 +6,12 @@
 
 class Game {
   public:
-    Game();
+    Game(const char *title, int width, int height, bool fullscreen);
     ~Game();
 
-    void init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen);
     void handleEvents();
     void update();
     void render();
-    void destroy();
 
     bool isRunning() { return running; }
   private:
@@ -22,9 +20,7 @@ class Game {
     SDL_Event event;
     
     bool running = false;
-
     Board *board;
-    int score = 0;
 };
 
 #endif

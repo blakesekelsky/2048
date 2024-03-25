@@ -1,11 +1,7 @@
 #include "Game.hpp"
 #include <SDL2/SDL_ttf.h>
 
-Game::Game() : board(nullptr) { 
-}
-Game::~Game() {}
-
-void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen){
+Game::Game(const char *title, int width, int height, bool fullscreen) : board(nullptr) {
   if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
     printf("SDL initialized\n");
   } else {
@@ -23,7 +19,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
   }
 
   // init window
-  window = SDL_CreateWindow(title, xpos, ypos, width, height, fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
+  window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, fullscreen ? SDL_WINDOW_FULLSCREEN : 0);
   if (window) {
     printf("Window created\n");
   } else {
@@ -42,10 +38,15 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     return;
   }
 
-  // init board
   board = new Board();
-
   running = true;
+}
+Game::~Game() {
+  delete board;
+  SDL_DestroyRenderer(renderer);
+  SDL_DestroyWindow(window);
+  TTF_Quit();
+  SDL_Quit();
 }
 
 void Game::handleEvents(){
@@ -54,63 +55,19 @@ void Game::handleEvents(){
       running = false;
     }
 
-    if (event.type == SDL_KEYDOWN) {
-      switch (event.key.keysym.sym) {
-        case SDLK_LEFT:
-          if (board->leftSwipe()) {
-            if (!board->generateTile())
-              running = false;
-            board->printScore();
-          }
-          break;
-        case SDLK_RIGHT:
-          if (board->rightSwipe()) {
-            if (!board->generateTile())
-              running = false;
-            board->printScore();
-          }
-          break;
-        case SDLK_UP:
-          if (board->upSwipe()) {
-            if (!board->generateTile())
-              running = false;
-            board->printScore();
-          }
-          break;
-        case SDLK_DOWN:
-          if (board->downSwipe()) {
-            if (!board->generateTile())
-              running = false;
-            board->printScore();
-          }
-          break;
-      }
-    }
+    board->handleEvents(window, event);
   }
 }
 
 void Game::update(){
-  // update tile values
   board->update();
 }
 
 void Game::render(){
-  // clear renderer
   SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
   SDL_RenderClear(renderer);
 
-  // render board
   board->render(renderer);
   
-  // draw to screen
   SDL_RenderPresent(renderer);
-}
-
-void Game::destroy(){
-  // free resources
-  SDL_DestroyRenderer(renderer);
-  SDL_DestroyWindow(window);
-  SDL_Quit();
-  TTF_Quit();
-  printf("SDL closed\n");
 }

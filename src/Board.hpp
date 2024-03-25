@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include "Tile.hpp"
+#include <string>
 
 class Board {
   private:
@@ -19,16 +20,66 @@ class Board {
       }
     }
 
-    bool generateTile();
-    void printScore() { printf("Score: %d\n", score); }
+    void generateTile();
+    void makeCopy(int srcValues[4][4], int destValues[4][4]);
+    bool compareCopy(int oldValues[4][4], int newValues[4][4]);
+    bool isPossibleNextMove();
 
-    void makeCopy(int oldValues[4][4]);
-    bool compareCopy(int oldValues[4][4]);
+    bool swipeUp();
+    bool swipeDown();
+    bool swipeLeft();
+    bool swipeRight();
 
-    bool leftSwipe();
-    bool rightSwipe();
-    bool upSwipe();
-    bool downSwipe();
+    void handleEvents(SDL_Window *window, SDL_Event event) {
+      if (event.type == SDL_KEYDOWN) {
+        switch (event.key.keysym.sym) {
+          case SDLK_UP:
+            if (swipeUp()) {
+              generateTile();
+              if (!isPossibleNextMove()) {
+                std::string title = "Game Over! Final score: " + std::to_string(score);
+                SDL_SetWindowTitle(window, title.c_str());
+              } else {
+                SDL_SetWindowTitle(window, std::to_string(score).c_str());
+              }
+            }
+            break;
+          case SDLK_DOWN:
+            if (swipeDown()) {
+              generateTile();
+              if (!isPossibleNextMove()) {
+                std::string title = "Game Over! Final score: " + std::to_string(score);
+                SDL_SetWindowTitle(window, title.c_str());
+              } else {
+                SDL_SetWindowTitle(window, std::to_string(score).c_str());
+              }
+            }
+            break;
+          case SDLK_LEFT:
+            if (swipeLeft()) {
+              generateTile();
+              if (!isPossibleNextMove()) {
+                std::string title = "Game Over! Final score: " + std::to_string(score);
+                SDL_SetWindowTitle(window, title.c_str());
+              } else {
+                SDL_SetWindowTitle(window, std::to_string(score).c_str());
+              }
+            }
+            break;
+          case SDLK_RIGHT:
+            if (swipeRight()) {
+              generateTile();
+              if (!isPossibleNextMove()) {
+                std::string title = "Game Over! Final score: " + std::to_string(score);
+                SDL_SetWindowTitle(window, title.c_str());
+              } else {
+                SDL_SetWindowTitle(window, std::to_string(score).c_str());
+              }
+            }
+            break;
+        }
+      }
+    }
 
     void update() {
       // update tiles
@@ -47,10 +98,6 @@ class Board {
           tiles[i][j].render(renderer);
         }
       }
-
-      // render score
-      Tile scoreTile = Tile(370, 480, 96, 75, score);
-      scoreTile.render(renderer);
     }
 };
 
