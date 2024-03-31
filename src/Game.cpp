@@ -1,7 +1,6 @@
 #include "Game.hpp"
-#include <SDL2/SDL_ttf.h>
 
-Game::Game(const char *title, int width, int height, bool fullscreen) : board(nullptr) {
+Game::Game(const char *title, int width, int height, bool fullscreen) {
   if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
     printf("SDL initialized\n");
   } else {
@@ -42,7 +41,6 @@ Game::Game(const char *title, int width, int height, bool fullscreen) : board(nu
   running = true;
 }
 Game::~Game() {
-  delete board;
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   TTF_Quit();

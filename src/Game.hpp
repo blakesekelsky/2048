@@ -2,6 +2,7 @@
 #define GAME_HPP
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include "Board.hpp"
 
 class Game {
@@ -15,12 +16,12 @@ class Game {
 
     bool isRunning() { return running; }
   private:
-    SDL_Window *window;
-    SDL_Renderer *renderer;
+    SDL_Window *window = nullptr;
+    SDL_Renderer *renderer = nullptr;
     SDL_Event event;
     
     bool running = false;
-    Board *board;
+    Board *board = nullptr;
 };
 
 #endif

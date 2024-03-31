@@ -1,6 +1,6 @@
 dev_binary:
 	mkdir -p bin
-	clang++ -stdlib=libc++ src/Board.cpp src/Game.cpp src/main.cpp -lSDL2 -lSDL2_ttf -o bin/main
+	clang++ src/Board.cpp src/Game.cpp src/main.cpp -lSDL2 -lSDL2_ttf -o bin/main
 
 run_dev: dev_binary
 	./bin/main
